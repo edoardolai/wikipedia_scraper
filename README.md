@@ -63,21 +63,24 @@ python leaders_scraper.py
 
 This will generate a leaders.json file containing biographical data for world leaders.
 
-Functions
-
+## Functions
+```python
 get_first_paragraph(wikipedia_url: str, regexes: List[str], session: requests.Session) -> str
-
+```
 Extracts and cleans the first relevant paragraph from the given Wikipedia URL.
 
+```python
 get_leaders() -> Dict
+```
 
 Fetches leader data for each country, retrieves their Wikipedia biographies using multiprocessing, and structures the data.
 
+```python
 save(leaders_per_country: Dict, file_name: str, indent: int = 4)
-
+```
 Saves the extracted data to a JSON file.
 
-Example Output
+## Example Output
 
 ```bash
 An excerpt from leaders.json:
@@ -100,13 +103,13 @@ An excerpt from leaders.json:
   ...
 }
 ```
-Improvements in This Version
+# Improvements in This Version
 
 	•	Multiprocessing dramatically reduces the time needed to scrape and process Wikipedia data.
 	•	Modular Structure: get_first_paragraph has been moved to a separate module for better organization.
 	•	Error Handling: Enhanced exception handling for API and scraping failures.
 
-Future Improvements Ideas
+# Future Improvements Ideas
 
 	•	Unit Testing: Add unit tests for individual components.
 	•	Asynchronous Requests: Use aiohttp for even faster concurrent HTTP requests.
