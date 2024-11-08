@@ -50,7 +50,7 @@ def get_leaders()->Dict:
         except Exception as e:
             print(f"Something went wrong: {e}")
 
-        leaders_urls = [(leader["wikipedia_url"], leader["id"], regexes, wiki_session) for leader in leaders_data.json()]
+        leaders_urls = [(leader["wikipedia_url"], regexes, wiki_session) for leader in leaders_data.json()]
         with Pool() as pool:
             res = pool.starmap(get_first_paragraph, leaders_urls)
             for leaders_idx, leader in enumerate(leaders):
