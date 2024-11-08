@@ -1,25 +1,9 @@
-import re
 import requests
 from bs4 import BeautifulSoup as bs
 import json
-from typing import List,Dict
-
-def get_first_paragraph(wikipedia_url: str, regexes:List[str], session: requests.Session) -> str:
-    '''Returns relevant paragraph from provided url page.'''
-    first_paragraph = ''
-    leader_data = bs(session.get(wikipedia_url).content, 'html.parser')
-    paragraphs = leader_data.find_all("p")
-    
-    for par in paragraphs:
-        if par.find('b') is not None:
-            first_paragraph = par.get_text()
-            break
-    
-    for regex in regexes:
-        first_paragraph = re.sub(regex, '', first_paragraph)
-    
-    return first_paragraph.strip()
-
+from typing import Dict
+from get_first_paragraph import get_first_paragraph
+from multiprocessing import Pool
 
 def get_leaders()->Dict:
     '''Extract leaders information from provided data and calls internally get_first_paragraph() to extract relevant paragraph about leader's life.'''
@@ -65,9 +49,13 @@ def get_leaders()->Dict:
                 leaders = leaders_data.json()
         except Exception as e:
             print(f"Something went wrong: {e}")
-        for leader in leaders:
-            leader["bio"] = get_first_paragraph(leader["wikipedia_url"], regexes,wiki_session)
-        leaders_per_country[country] = leaders
+
+        leaders_urls = [(leader["wikipedia_url"], leader["id"], regexes, wiki_session) for leader in leaders_data.json()]
+        with Pool() as pool:
+            res = pool.starmap(get_first_paragraph, leaders_urls)
+            for leaders_idx, leader in enumerate(leaders):
+                leader["bio"] = res[leaders_idx]
+            leaders_per_country[country] = leaders
     return leaders_per_country
 
 def save(leaders_per_country: Dict, file_name: str, indent: int = 4):
@@ -75,6 +63,6 @@ def save(leaders_per_country: Dict, file_name: str, indent: int = 4):
     with open(f'{file_name}.json', 'w', encoding='utf-8') as file:
         json.dump(leaders_per_country, file, ensure_ascii=False, indent=indent)
 
-leaders_dict = get_leaders()
-
-save(leaders_dict,'leaders')
+if __name__ == '__main__':
+    leaders_dict = get_leaders()
+    save(leaders_dict,'leaders')
