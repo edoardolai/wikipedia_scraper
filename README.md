@@ -45,25 +45,21 @@ pip install requests beautifulsoup4
 
 
 File Structure
-
+```bash
 .
 ├── get_first_paragraph.py  # Contains the logic to extract and clean Wikipedia paragraphs
 ├── leaders_scraper.py  # Main script with multiprocessing logic
 ├── leaders.json  # Generated JSON file with leader data
 └── .gitignore  # Ignores JSON and cache files
+```
 
-.gitignore
-
-Ensure sensitive or unnecessary files are not tracked:
-
-__pycache__/
-*.json
-
-Usage
+## Usage
 
 Run the program from the command line:
 
+```bash
 python leaders_scraper.py
+```
 
 This will generate a leaders.json file containing biographical data for world leaders.
 
@@ -83,6 +79,7 @@ Saves the extracted data to a JSON file.
 
 Example Output
 
+```bash
 An excerpt from leaders.json:
 {
   "us": [
@@ -102,7 +99,7 @@ An excerpt from leaders.json:
   ],
   ...
 }
-
+```
 Improvements in This Version
 
 	•	Multiprocessing dramatically reduces the time needed to scrape and process Wikipedia data.
