@@ -103,13 +103,13 @@ An excerpt from leaders.json:
   ...
 }
 ```
-# Improvements in This Version
+### Improvements in This Version
 
 	•	Multiprocessing dramatically reduces the time needed to scrape and process Wikipedia data.
 	•	Modular Structure: get_first_paragraph has been moved to a separate module for better organization.
 	•	Error Handling: Enhanced exception handling for API and scraping failures.
 
-# Future Improvements Ideas
+### Future Improvements Ideas
 
 	•	Unit Testing: Add unit tests for individual components.
 	•	Asynchronous Requests: Use aiohttp for even faster concurrent HTTP requests.
