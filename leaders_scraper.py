@@ -18,7 +18,7 @@ def get_first_paragraph(wikipedia_url: str, regexes:List[str], session: requests
     for regex in regexes:
         first_paragraph = re.sub(regex, '', first_paragraph)
     
-    return first_paragraph
+    return first_paragraph.strip()
 
 
 def get_leaders()->Dict:
