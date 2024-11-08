@@ -41,6 +41,8 @@ Install required packages:
 
 ```bash
 pip install requests beautifulsoup4
+```
+
 
 File Structure
 
